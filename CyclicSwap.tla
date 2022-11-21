@@ -67,7 +67,6 @@ RMRefund(r) ==
   (*************************************************************************)
   /\ rmState[r] = "init"
   /\ \E r_s \in RM: rmState[r_s]="commit"
-\*  /\ \A r_s \in RM: rmState[r_s]#"payment"
   /\ receivedSecret[r] # RM
   /\ rmState' = [rmState EXCEPT ![r] = "refund"]
   /\ UNCHANGED <<receivedSecret, msgs>>
@@ -85,7 +84,7 @@ RMPayment(r) ==
 
 RMSendSecret(r) == 
   (*************************************************************************)
-  (* Resource manager r prepares.                                          *)
+  (* Party r send a secret                            *)
   (*************************************************************************)
   /\ rmState[r] = "init"
   /\ msgs' = msgs \cup {[type |-> "secret", rm |-> r]}
